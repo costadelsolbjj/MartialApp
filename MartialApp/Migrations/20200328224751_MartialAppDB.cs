@@ -72,12 +72,12 @@ namespace MartialApp.Migrations
                     LastName2 = table.Column<string>(maxLength: 255, nullable: true),
                     SchoolId = table.Column<int>(nullable: true),
                     BeltId = table.Column<int>(nullable: true),
-                    Email = table.Column<string>(maxLength: 255, nullable: true),
                     Phone = table.Column<string>(maxLength: 255, nullable: true),
                     Birthday = table.Column<DateTime>(type: "datetime", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime", nullable: true),
                     Tarifa = table.Column<string>(maxLength: 255, nullable: true),
-                    Importe = table.Column<double>(nullable: true)
+                    Importe = table.Column<double>(nullable: true),
+                    UserGuid = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
