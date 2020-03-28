@@ -8,6 +8,8 @@ namespace MartialApp.Models
         public Trainers()
         {
             TrainerPayment = new HashSet<TrainerPayment>();
+            School = new School();
+            Belt = new Belt();
         }
 
         public int TrainerId { get; set; }
@@ -25,5 +27,8 @@ namespace MartialApp.Models
         public double? Importe { get; set; }
 
         public virtual ICollection<TrainerPayment> TrainerPayment { get; set; }
+        public virtual School School { get; set; }
+
+        public virtual Belt Belt { get; set; }
     }
 }

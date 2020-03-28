@@ -24,7 +24,8 @@ namespace MartialApp.Controllers
         // GET: Trainers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Trainers.ToListAsync());
+            return View(await _context.Trainers.Include("School")
+                .Include("Belt").ToListAsync());
         }
 
         // GET: Trainers/Details/5
@@ -36,6 +37,8 @@ namespace MartialApp.Controllers
             }
 
             var trainers = await _context.Trainers
+                .Include("School")
+                .Include("Belt")
                 .FirstOrDefaultAsync(m => m.TrainerId == id);
             if (trainers == null)
             {
