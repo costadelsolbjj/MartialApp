@@ -24,8 +24,9 @@ namespace MartialApp.Controllers
         // GET: Trainers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Trainers.Include("School")
-                .Include("Belt").ToListAsync());
+
+
+            return View(await _context.Trainers.ToListAsync());
         }
 
         // GET: Trainers/Details/5
@@ -37,8 +38,6 @@ namespace MartialApp.Controllers
             }
 
             var trainers = await _context.Trainers
-                .Include("School")
-                .Include("Belt")
                 .FirstOrDefaultAsync(m => m.TrainerId == id);
             if (trainers == null)
             {
@@ -79,6 +78,8 @@ namespace MartialApp.Controllers
             }
 
             var trainers = await _context.Trainers.FindAsync(id);
+            PopulateBeltDropDownList(trainers.BeltId);
+            PopulateSchoolDropDownList(trainers.SchoolId);
             if (trainers == null)
             {
                 return NotFound();
@@ -103,6 +104,8 @@ namespace MartialApp.Controllers
                 try
                 {
                     _context.Update(trainers);
+                    //_context.Entry<Trainers>(trainers).Property(x => x.School).IsModified = false;
+                    //_context.Entry<Trainers>(trainers).Property(x => x.Belt).IsModified = false;
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -153,6 +156,21 @@ namespace MartialApp.Controllers
         private bool TrainersExists(int id)
         {
             return _context.Trainers.Any(e => e.TrainerId == id);
+        }
+        private void PopulateBeltDropDownList(object selectedBelt = null)
+        {
+            var beltQuery = from d in _context.Belt
+                                   orderby d.BeltId
+                                   select d;
+            ViewBag.BeltId = new SelectList(beltQuery.AsNoTracking(), "BeltId", "Colour", selectedBelt);
+        }
+
+        private void PopulateSchoolDropDownList(object selectedSchool = null)
+        {
+            var schoolQuery = from d in _context.School
+                            orderby d.SchoolId
+                            select d;
+            ViewBag.SchoolId = new SelectList(schoolQuery.AsNoTracking(), "SchoolId", "NickName", selectedSchool);
         }
     }
 }

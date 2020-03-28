@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MartialApp.Models
 {
@@ -8,8 +9,6 @@ namespace MartialApp.Models
         public Trainers()
         {
             TrainerPayment = new HashSet<TrainerPayment>();
-            School = new School();
-            Belt = new Belt();
         }
 
         public int TrainerId { get; set; }
@@ -17,18 +16,20 @@ namespace MartialApp.Models
         public string Name { get; set; }
         public string LastName { get; set; }
         public string LastName2 { get; set; }
+        [Display(Name = "School")]
         public int? SchoolId { get; set; }
+        [Display(Name = "Belt")]
         public int? BeltId { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? Birthday { get; set; }
         public DateTime? Created { get; set; }
         public string Tarifa { get; set; }
         public double? Importe { get; set; }
 
         public virtual ICollection<TrainerPayment> TrainerPayment { get; set; }
-        public virtual School School { get; set; }
 
-        public virtual Belt Belt { get; set; }
     }
 }
