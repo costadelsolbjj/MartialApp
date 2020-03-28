@@ -24,7 +24,16 @@ namespace MartialApp.Controllers
         // GET: Trainers
         public async Task<IActionResult> Index()
         {
+            
+            var userClaim = User.Claims.First().Value;
 
+            var trainers = await _context.Trainers
+                .AnyAsync(m => m.UserGuid == Guid.Parse(userClaim));
+
+            if (!trainers)
+            {
+                return RedirectToAction(nameof(Create));
+            }
 
             return View(await _context.Trainers.ToListAsync());
         }
@@ -50,6 +59,8 @@ namespace MartialApp.Controllers
         // GET: Trainers/Create
         public IActionResult Create()
         {
+            var userClaim = User.Claims.First().Value;
+
             return View();
         }
 
@@ -62,6 +73,9 @@ namespace MartialApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                trainers.UserGuid= Guid.Parse(User.Claims.First().Value);
+
+                //var userId = (new System.Linq.SystemCore_EnumerableDebugView<System.Security.Claims.Claim>(userClaim).Items[0]).Value;
                 _context.Add(trainers);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

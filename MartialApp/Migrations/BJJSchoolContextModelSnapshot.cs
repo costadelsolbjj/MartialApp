@@ -131,10 +131,6 @@ namespace MartialApp.Migrations
                     b.Property<DateTime?>("Created")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
                     b.Property<double?>("Importe")
                         .HasColumnType("float");
 
@@ -160,6 +156,9 @@ namespace MartialApp.Migrations
                     b.Property<string>("Tarifa")
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
+
+                    b.Property<Guid>("UserGuid")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(255)")

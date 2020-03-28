@@ -20,7 +20,6 @@ namespace MartialApp.Models
         public int? SchoolId { get; set; }
         [Display(Name = "Belt")]
         public int? BeltId { get; set; }
-        public string Email { get; set; }
         public string Phone { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -30,6 +29,6 @@ namespace MartialApp.Models
         public double? Importe { get; set; }
 
         public virtual ICollection<TrainerPayment> TrainerPayment { get; set; }
-
+        public Guid UserGuid { get; set; }
     }
 }

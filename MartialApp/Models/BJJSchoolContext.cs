@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -93,7 +95,6 @@ namespace MartialApp.Models
 
                 entity.Property(e => e.Created).HasColumnType("datetime");
 
-                entity.Property(e => e.Email).HasMaxLength(255);
 
                 entity.Property(e => e.LastName).HasMaxLength(255);
 
