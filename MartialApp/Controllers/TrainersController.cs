@@ -60,6 +60,8 @@ namespace MartialApp.Controllers
         public IActionResult Create()
         {
             var userClaim = User.Claims.First().Value;
+            PopulateBeltDropDownList(0);
+            PopulateSchoolDropDownList(0);
 
             return View();
         }
