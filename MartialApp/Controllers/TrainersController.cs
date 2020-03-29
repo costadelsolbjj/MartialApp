@@ -24,18 +24,24 @@ namespace MartialApp.Controllers
         // GET: Trainers
         public async Task<IActionResult> Index()
         {
+
+
+            if (User.Claims.ElementAt(3).Value=="Admin")
+            {
+                return View(await _context.Trainers.ToListAsync());
+            }
             
             var userClaim = User.Claims.First().Value;
 
             var trainers = await _context.Trainers
-                .AnyAsync(m => m.UserGuid == Guid.Parse(userClaim));
+                .FirstOrDefaultAsync(m => m.UserGuid == Guid.Parse(userClaim));
 
-            if (!trainers)
+            if (trainers.UserGuid == null)
             {
                 return RedirectToAction(nameof(Create));
             }
 
-            return View(await _context.Trainers.ToListAsync());
+            return RedirectToAction("Details", new { Id = trainers.TrainerId });
         }
 
         // GET: Trainers/Details/5

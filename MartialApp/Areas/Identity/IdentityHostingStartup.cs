@@ -19,8 +19,10 @@ namespace MartialApp.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("MartialAppContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<MartialAppContext>();
+                services.AddIdentity<IdentityUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddEntityFrameworkStores<MartialAppContext>()
+                .AddDefaultUI()
+            .AddDefaultTokenProviders();
             });
         }
     }
