@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using MartialApp.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace fullcalendarcore.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CalendarController : Controller
     {
 
