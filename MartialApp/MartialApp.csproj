@@ -5,6 +5,10 @@
     <UserSecretsId>aspnet-MartialApp-63C49135-BAD9-433A-866C-3128C34782D7</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\js\calendar.js" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.2" />
@@ -19,6 +23,11 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="wwwroot\js\calendar.js" />
   </ItemGroup>
 
 </Project>

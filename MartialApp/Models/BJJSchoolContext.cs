@@ -23,6 +23,11 @@ namespace MartialApp.Models
         public virtual DbSet<School> School { get; set; }
         public virtual DbSet<TrainerPayment> TrainerPayment { get; set; }
         public virtual DbSet<Trainers> Trainers { get; set; }
+        public virtual DbSet<Schedule> Schedule { get; set; }
+        public virtual DbSet<ScheduleTrainer> ScheduleTrainer { get; set; }
+
+        public virtual DbSet<Event> Event { get; set; }
+        
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -107,6 +112,27 @@ namespace MartialApp.Models
                 entity.Property(e => e.Tarifa).HasMaxLength(255);
 
                 entity.Property(e => e.UserName).HasMaxLength(255);
+            });
+
+
+            modelBuilder.Entity<Schedule>(entity =>
+            {
+                entity.HasKey(e => e.SheduleId)
+                    .HasName("PK_Schedule");
+
+                entity.Property(e => e.SheduleStart).HasColumnType("datetime");
+
+                entity.Property(e => e.SheduleEnd).HasColumnType("datetime");
+
+            });
+
+            modelBuilder.Entity<ScheduleTrainer>(entity =>
+            {
+                entity.HasOne(d => d.Schedule)
+                    .WithMany(p => p.ScheduleTrainer)
+                    .HasForeignKey(d => d.ScheduleId)
+                    .HasConstraintName("FK_ScheduleTrainer_Schedule");
+
             });
 
             OnModelCreatingPartial(modelBuilder);

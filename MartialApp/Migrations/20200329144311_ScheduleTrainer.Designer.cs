@@ -4,14 +4,16 @@ using MartialApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MartialApp.Migrations
 {
     [DbContext(typeof(BJJSchoolContext))]
-    partial class BJJSchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20200329144311_ScheduleTrainer")]
+    partial class ScheduleTrainer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,33 +55,6 @@ namespace MartialApp.Migrations
                     b.HasKey("DiscountId");
 
                     b.ToTable("Discount");
-                });
-
-            modelBuilder.Entity("MartialApp.Models.Event", b =>
-                {
-                    b.Property<int>("EventId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("AllDay")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("End")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Start")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("EventId");
-
-                    b.ToTable("Event");
                 });
 
             modelBuilder.Entity("MartialApp.Models.Payment", b =>
