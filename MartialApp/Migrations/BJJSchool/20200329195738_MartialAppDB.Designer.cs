@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace MartialApp.Migrations
+namespace MartialApp.Migrations.BJJSchool
 {
     [DbContext(typeof(BJJSchoolContext))]
-    [Migration("20200329173413_EventMigration")]
-    partial class EventMigration
+    [Migration("20200329195738_MartialAppDB")]
+    partial class MartialAppDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

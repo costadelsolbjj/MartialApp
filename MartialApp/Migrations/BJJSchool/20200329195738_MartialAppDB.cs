@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MartialApp.Migrations
+namespace MartialApp.Migrations.BJJSchool
 {
     public partial class MartialAppDB : Migration
     {
@@ -34,6 +34,23 @@ namespace MartialApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Event",
+                columns: table => new
+                {
+                    EventId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Start = table.Column<string>(nullable: true),
+                    End = table.Column<string>(nullable: true),
+                    AllDay = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Event", x => x.EventId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Payment",
                 columns: table => new
                 {
@@ -44,6 +61,21 @@ namespace MartialApp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Payment", x => x.PaimentId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Schedule",
+                columns: table => new
+                {
+                    SheduleId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SheduleStart = table.Column<DateTime>(type: "datetime", nullable: false),
+                    SheduleEnd = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LessonId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Schedule", x => x.SheduleId);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,6 +117,33 @@ namespace MartialApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ScheduleTrainer",
+                columns: table => new
+                {
+                    ScheduleTrainerId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TrainerId = table.Column<int>(nullable: true),
+                    ScheduleId = table.Column<int>(nullable: true),
+                    TrainersTrainerId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ScheduleTrainer", x => x.ScheduleTrainerId);
+                    table.ForeignKey(
+                        name: "FK_ScheduleTrainer_Schedule",
+                        column: x => x.ScheduleId,
+                        principalTable: "Schedule",
+                        principalColumn: "SheduleId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ScheduleTrainer_Trainers_TrainersTrainerId",
+                        column: x => x.TrainersTrainerId,
+                        principalTable: "Trainers",
+                        principalColumn: "TrainerId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TrainerPayment",
                 columns: table => new
                 {
@@ -111,6 +170,16 @@ namespace MartialApp.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_ScheduleTrainer_ScheduleId",
+                table: "ScheduleTrainer",
+                column: "ScheduleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ScheduleTrainer_TrainersTrainerId",
+                table: "ScheduleTrainer",
+                column: "TrainersTrainerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TrainerPayment_PaymentId",
                 table: "TrainerPayment",
                 column: "PaymentId");
@@ -130,10 +199,19 @@ namespace MartialApp.Migrations
                 name: "Discount");
 
             migrationBuilder.DropTable(
+                name: "Event");
+
+            migrationBuilder.DropTable(
+                name: "ScheduleTrainer");
+
+            migrationBuilder.DropTable(
                 name: "School");
 
             migrationBuilder.DropTable(
                 name: "TrainerPayment");
+
+            migrationBuilder.DropTable(
+                name: "Schedule");
 
             migrationBuilder.DropTable(
                 name: "Payment");

@@ -7,36 +7,40 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MartialApp.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace MartialApp.Controllers
 {
-    
+
     [Authorize]
     public class TrainersController : Controller
     {
         private readonly BJJSchoolContext _context;
-
-        public TrainersController(BJJSchoolContext context)
+        private RoleManager<IdentityRole> roleManager;
+        private UserManager<IdentityUser> userManager;
+        public TrainersController(BJJSchoolContext context, RoleManager<IdentityRole> roleMgr, UserManager<IdentityUser> userMrg)
         {
             _context = context;
+            roleManager = roleMgr;
+            userManager= userMrg;
         }
 
         // GET: Trainers
         public async Task<IActionResult> Index()
         {
+            var userClaim = User.Claims.First().Value;
+            var user = await userManager.FindByIdAsync(userClaim);
 
-
-            if (User.Claims.ElementAt(3).Value=="Admin")
+            if (user != null && await userManager.IsInRoleAsync(user, "Admin"))
             {
                 return View(await _context.Trainers.ToListAsync());
             }
             
-            var userClaim = User.Claims.First().Value;
 
             var trainers = await _context.Trainers
-                .FirstOrDefaultAsync(m => m.UserGuid == Guid.Parse(userClaim));
+                .Where(m => m.UserGuid == Guid.Parse(userClaim)).FirstOrDefaultAsync();
 
-            if (trainers.UserGuid == null)
+            if (trainers == null)
             {
                 return RedirectToAction(nameof(Create));
             }

@@ -3,11 +3,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 namespace MartialApp.Models
 {
     public partial class BJJSchoolContext : DbContext
     {
+
+        
         public BJJSchoolContext()
         {
         }
@@ -36,6 +40,8 @@ namespace MartialApp.Models
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
 //                optionsBuilder.UseSqlServer("Server=DESKTOP-NIE6JI9\\SQLEXPRESS;Database=BJJSchool;Trusted_Connection=True;");
 //            }
+
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
