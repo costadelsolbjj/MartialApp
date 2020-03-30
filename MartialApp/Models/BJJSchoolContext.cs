@@ -27,8 +27,7 @@ namespace MartialApp.Models
         public virtual DbSet<School> School { get; set; }
         public virtual DbSet<TrainerPayment> TrainerPayment { get; set; }
         public virtual DbSet<Trainers> Trainers { get; set; }
-        public virtual DbSet<Schedule> Schedule { get; set; }
-        public virtual DbSet<ScheduleTrainer> ScheduleTrainer { get; set; }
+        public virtual DbSet<EventTrainer> EventTrainer { get; set; }
 
         public virtual DbSet<Event> Event { get; set; }
         
@@ -121,23 +120,19 @@ namespace MartialApp.Models
             });
 
 
-            modelBuilder.Entity<Schedule>(entity =>
+          
+
+            modelBuilder.Entity<EventTrainer>(entity =>
             {
-                entity.HasKey(e => e.SheduleId)
-                    .HasName("PK_Schedule");
+                entity.HasOne(d => d.Trainers)
+                    .WithMany(p => p.EventTrainer)
+                    .HasForeignKey(d => d.TrainerId)
+                    .HasConstraintName("FK_EventTrainer_Trainer");
 
-                entity.Property(e => e.SheduleStart).HasColumnType("datetime");
-
-                entity.Property(e => e.SheduleEnd).HasColumnType("datetime");
-
-            });
-
-            modelBuilder.Entity<ScheduleTrainer>(entity =>
-            {
-                entity.HasOne(d => d.Schedule)
-                    .WithMany(p => p.ScheduleTrainer)
-                    .HasForeignKey(d => d.ScheduleId)
-                    .HasConstraintName("FK_ScheduleTrainer_Schedule");
+                entity.HasOne(d => d.Event)
+                    .WithMany(p => p.EventTrainer)
+                    .HasForeignKey(d => d.EventId)
+                    .HasConstraintName("FK_EventTrainer_Event");
 
             });
 

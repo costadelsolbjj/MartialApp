@@ -30,5 +30,7 @@ namespace MartialApp.Models
 
         public virtual ICollection<TrainerPayment> TrainerPayment { get; set; }
         public Guid UserGuid { get; set; }
+
+        public ICollection<EventTrainer> EventTrainer { get; set; }
     }
 }

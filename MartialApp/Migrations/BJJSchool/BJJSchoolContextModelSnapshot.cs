@@ -82,6 +82,28 @@ namespace MartialApp.Migrations.BJJSchool
                     b.ToTable("Event");
                 });
 
+            modelBuilder.Entity("MartialApp.Models.EventTrainer", b =>
+                {
+                    b.Property<int>("EventTrainerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TrainerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EventTrainerId");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("TrainerId");
+
+                    b.ToTable("EventTrainer");
+                });
+
             modelBuilder.Entity("MartialApp.Models.Payment", b =>
                 {
                     b.Property<int>("PaimentId")
@@ -96,53 +118,6 @@ namespace MartialApp.Migrations.BJJSchool
                     b.HasKey("PaimentId");
 
                     b.ToTable("Payment");
-                });
-
-            modelBuilder.Entity("MartialApp.Models.Schedule", b =>
-                {
-                    b.Property<int>("SheduleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("LessonId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("SheduleEnd")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime>("SheduleStart")
-                        .HasColumnType("datetime");
-
-                    b.HasKey("SheduleId")
-                        .HasName("PK_Schedule");
-
-                    b.ToTable("Schedule");
-                });
-
-            modelBuilder.Entity("MartialApp.Models.ScheduleTrainer", b =>
-                {
-                    b.Property<int>("ScheduleTrainerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ScheduleId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TrainerId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TrainersTrainerId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ScheduleTrainerId");
-
-                    b.HasIndex("ScheduleId");
-
-                    b.HasIndex("TrainersTrainerId");
-
-                    b.ToTable("ScheduleTrainer");
                 });
 
             modelBuilder.Entity("MartialApp.Models.School", b =>
@@ -244,16 +219,17 @@ namespace MartialApp.Migrations.BJJSchool
                     b.ToTable("Trainers");
                 });
 
-            modelBuilder.Entity("MartialApp.Models.ScheduleTrainer", b =>
+            modelBuilder.Entity("MartialApp.Models.EventTrainer", b =>
                 {
-                    b.HasOne("MartialApp.Models.Schedule", "Schedule")
-                        .WithMany("ScheduleTrainer")
-                        .HasForeignKey("ScheduleId")
-                        .HasConstraintName("FK_ScheduleTrainer_Schedule");
+                    b.HasOne("MartialApp.Models.Event", "Event")
+                        .WithMany("EventTrainer")
+                        .HasForeignKey("EventId")
+                        .HasConstraintName("FK_EventTrainer_Event");
 
                     b.HasOne("MartialApp.Models.Trainers", "Trainers")
-                        .WithMany()
-                        .HasForeignKey("TrainersTrainerId");
+                        .WithMany("EventTrainer")
+                        .HasForeignKey("TrainerId")
+                        .HasConstraintName("FK_EventTrainer_Trainer");
                 });
 
             modelBuilder.Entity("MartialApp.Models.TrainerPayment", b =>
