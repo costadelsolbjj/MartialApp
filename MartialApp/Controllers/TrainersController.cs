@@ -29,6 +29,16 @@ namespace MartialApp.Controllers
         public async Task<IActionResult> Index()
         {
             var userClaim = User.Claims.First().Value;
+            //var role = "";
+            //var email = "";
+            //foreach (var claim in User.Claims.ToList())
+            //{
+            //    if (claim.Type.Contains("role"))
+            //        role = claim.Value;
+            //    if (claim.Type.Contains("email"))
+            //        email = claim.Value;
+
+            //}
             var user = await userManager.FindByIdAsync(userClaim);
 
             if (user != null && await userManager.IsInRoleAsync(user, "Admin"))
