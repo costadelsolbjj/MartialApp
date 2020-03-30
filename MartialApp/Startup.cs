@@ -33,6 +33,7 @@ namespace MartialApp
             //    .AddEntityFrameworkStores<MartialAppContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddTransient<BjjSeeder>(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
