@@ -9,6 +9,7 @@ using MartialApp.Models;
 
 namespace MartialApp.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SchoolsController : Controller
     {
         private readonly BJJSchoolContext _context;
