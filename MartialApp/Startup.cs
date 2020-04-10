@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using MartialApp.Models;
 using MartialApp.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Models;
 
 namespace MartialApp
 {
@@ -31,6 +32,10 @@ namespace MartialApp
             //        Configuration.GetConnectionString("DefaultConnection")));
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddEntityFrameworkStores<MartialAppContext>();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Martial Apps API", Version = "v1" });
+            });
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddTransient<BjjSeeder>(); 
@@ -39,6 +44,15 @@ namespace MartialApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Martial Apps API V1");
+            });
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
